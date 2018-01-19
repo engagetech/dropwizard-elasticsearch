@@ -45,7 +45,7 @@ public class ManagedEsClient implements Managed {
      * as transport addresses.
      *
      * @param config a valid {@link EsConfiguration} instance
-     * @throws IOException if a settings file has been specified and cannot be read.
+     * @throws IllegalArgumentException if a settings file has been specified and cannot be read.
      * @throws UnsupportedOperationException if {@code nodeClient=true} has been configured. This version
      * of Elasticsearch does not provide a NodeClient.
      */
