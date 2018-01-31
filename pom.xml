@@ -9,7 +9,7 @@
 
     <groupId>com.engagetech.dropwizard.modules</groupId>
     <artifactId>dropwizard-elasticsearch</artifactId>
-    <version>1.2.0-2-ES6.0.0-SNAPSHOT</version>
+    <version>1.2.0-2-ES6.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Dropwizard Elasticsearch Bundle</name>
@@ -72,7 +72,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <log4j.version>2.8.1</log4j.version>
         <dropwizard.version>1.2.0</dropwizard.version>
-        <elasticsearch.version>6.0.0</elasticsearch.version>
+        <elasticsearch.version>6.0.1</elasticsearch.version>
         <!-- github server corresponds to entry in ~/.m2/settings.xml -->
         <github.global.server>github</github.global.server>
     </properties>
@@ -95,8 +95,13 @@
             <artifactId>dropwizard-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
             <version>${elasticsearch.version}</version>
             <exclusions>
                 <exclusion>

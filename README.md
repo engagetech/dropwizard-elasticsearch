@@ -42,8 +42,7 @@ Configuration
 
 The following configuration settings are supported by `EsConfiguration`:
 
-* `nodeClient`: **DEPRECATED** Will throw an exception if `true`. Default: `false`
-* `servers`: A list of servers for usage with the created TransportClient if `nodeClient` is `false`
+* `servers`: A list of servers for usage with the created RestClient 
 * `clusterName`: The name of the Elasticsearch cluster; default: "elasticsearch"
 * `settings`: Any additional settings for Elasticsearch, see [Configuration](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/setup-configuration.html)
 * `settingsFile`: Any additional settings file for Elasticsearch, see [Configuration](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/setup-configuration.html)
@@ -58,15 +57,10 @@ The order of precedence is: `nodeClient`/`servers`/`clusterName` > `settings` > 
 any setting in `settingsFile` can be overwritten with `settings` which in turn get overwritten by the specific settings
 like `clusterName`.
 
-### Notes for Elasticsearch 5.x and 6.x
+### Notes for Elasticsearch 6.x
 
-From version  5.x Elasticsearch does not allow the creation of a NodeClient, and it is disabled in this version of
+Elasticsearch 6 uses RestClient instead of TransportClient. It does not allow the creation of a NodeClient, and it is removed in this version of
 the connector.
-
-The suggested alternative is to launch a local coordinating node, with whichever plugins you require,
-and use the TransportClient to communicate with that. The coordinating node should join your cluster.
-
-See [Connecting a Client to a Coordinating Only Node](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/client-connected-to-client-node.html)
 
 
 Maven Artifacts
@@ -78,7 +72,7 @@ This project is available on Maven Central. To add it to your project simply add
     <dependency>
       <groupId>com.engagetech.dropwizard.modules</groupId>
       <artifactId>dropwizard-elasticsearch</artifactId>
-      <version>1.2.0-2-ES6.0.0</version>
+      <version>1.2.0-2-ES6.0.1</version>
     </dependency>
 
 

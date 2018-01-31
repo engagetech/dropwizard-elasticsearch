@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Unit tests for {@link TransportAddressHelper}.
  */
+@Deprecated
 public class TransportAddressHelperTest {
 
     private static final int ES_DEFAULT_PORT = 9300;

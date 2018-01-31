@@ -1,0 +1,5 @@
+clusterName: dropwizard_elasticsearch_test
+servers:
+  - http://abc.com:9201
+  - localhost:9202
+  - https://abc.com
