@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Helper class for converting Guava {@link HostAndPort} objects to Elasticsearch {@link TransportAddress}.
  */
+@Deprecated
 public class TransportAddressHelper {
     private static final int DEFAULT_PORT = 9300;
 
