@@ -36,13 +36,7 @@ public class ManagedEsClient implements Managed {
 
         this.client = new RestHighLevelClient(RestClient.builder(
                 config.getServers().stream()
-                        .map(s -> {
-                            HttpHost host = HttpHost.create(s);
-                            if (host.getPort() == -1) {
-                                return new HttpHost(host.getHostName(), 9200, host.getSchemeName());
-                            }
-                            return host;
-                        })
+                        .map(s -> HttpHost.create(s))
                         .toArray(HttpHost[]::new))
         );
     }
@@ -59,7 +53,7 @@ public class ManagedEsClient implements Managed {
 
     @Override
     public void start() throws Exception {
-        logger.info("Starting client " + client.toString());
+        logger.info("Starting Elasticsearch client...");
     }
 
     /**
@@ -70,6 +64,7 @@ public class ManagedEsClient implements Managed {
      */
     @Override
     public void stop() throws Exception {
+        logger.info("Stopping Elasticsearch client...");
         closeClient();
     }
 
