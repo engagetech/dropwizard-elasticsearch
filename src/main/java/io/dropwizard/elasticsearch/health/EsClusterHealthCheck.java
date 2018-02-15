@@ -60,8 +60,7 @@ public class EsClusterHealthCheck extends HealthCheck {
     protected Result check() throws Exception {
         try {
             logger.info("Retrieving cluster health status...");
-            Map<String, String> parameters = Collections.singletonMap("wait_for_status", "green");
-            Response response = client.getLowLevelClient().performRequest("GET", "/_cluster/health", parameters);
+            Response response = client.getLowLevelClient().performRequest("GET", "/_cluster/health");
 
             ClusterHealthStatus healthStatus;
             try (InputStream is = response.getEntity().getContent()) {
