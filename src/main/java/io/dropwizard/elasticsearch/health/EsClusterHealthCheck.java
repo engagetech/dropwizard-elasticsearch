@@ -58,23 +58,31 @@ public class EsClusterHealthCheck extends HealthCheck {
      */
     @Override
     protected Result check() throws Exception {
-        Map<String, String> parameters = Collections.singletonMap("wait_for_status", "green");
-        Response response = client.getLowLevelClient().performRequest("GET", "/_cluster/health");
+        try {
+            logger.info("Retrieving cluster health status...");
+            Map<String, String> parameters = Collections.singletonMap("wait_for_status", "green");
+            Response response = client.getLowLevelClient().performRequest("GET", "/_cluster/health", parameters);
 
-        ClusterHealthStatus healthStatus;
-        try (InputStream is = response.getEntity().getContent()) {
-            Map<String, Object> map = XContentHelper.convertToMap(XContentType.JSON.xContent(), is, true);
-            healthStatus = ClusterHealthStatus.fromString((String) map.get("status"));
-        } catch (Exception ex) {
-            logger.error("Could not retreive cluster health status: " + ex.getMessage());
-            return Result.unhealthy("Last status: %s", ClusterHealthStatus.RED);
+            ClusterHealthStatus healthStatus;
+            try (InputStream is = response.getEntity().getContent()) {
+                Map<String, Object> map = XContentHelper.convertToMap(XContentType.JSON.xContent(), is, true);
+                healthStatus = ClusterHealthStatus.fromString((String) map.get("status"));
+            } catch (Exception ex) {
+                logger.error("Could not retrieve cluster health status: " + ex.getMessage());
+                return Result.unhealthy("Last status: %s", ClusterHealthStatus.RED);
+            }
+
+            if (healthStatus == ClusterHealthStatus.RED || (failOnYellow && healthStatus == ClusterHealthStatus.YELLOW)) {
+                logger.warn("Cluster health status: " + healthStatus.name());
+                return Result.unhealthy("Last status: %s", healthStatus.name());
+            } else {
+                logger.info("Cluster health status: " + healthStatus.name());
+                return Result.healthy("Last status: %s", healthStatus.name());
+            }
+        } catch (Exception e) {
+            logger.error("Could not retrieve cluster health status: ", e);
+            throw e;
         }
 
-        if (healthStatus == ClusterHealthStatus.RED || (failOnYellow && healthStatus == ClusterHealthStatus.YELLOW)) {
-            logger.warn("Cluster status: " + healthStatus.name());
-            return Result.unhealthy("Last status: %s", healthStatus.name());
-        } else {
-            return Result.healthy("Last status: %s", healthStatus.name());
-        }
     }
 }
