@@ -72,7 +72,7 @@ This project is available on Maven Central. To add it to your project simply add
     <dependency>
       <groupId>com.engagetech.dropwizard.modules</groupId>
       <artifactId>dropwizard-elasticsearch</artifactId>
-      <version>1.2.0-2-ES6.0.1</version>
+      <version>1.2.8-ES6.0.1</version>
     </dependency>
 
 
